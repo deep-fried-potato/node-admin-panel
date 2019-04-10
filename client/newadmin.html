@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>New Admin Creating Form</h1>
+    Navigate:<br>
+    <a href="/admin/newAdmin">Create admin account: </a><br>
+    <a href="/admin">Admin Login: </a><br>
+    <a href="/app/newApplication">Add new application in database </a><br>
+    <a href="/admin/applications">Admin view of applications</a><br>
+    <form id="adminForm" action="/app/createuser" enctype="multipart/form-data" method="post">
+      Username:<input id="username" type="text" name="username" value=""><br>
+      password:<input id="password" type="password" name="password" value=""><br>
+      <input id="btnSubmit" type="submit" name="" value="submit">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+    $("#btnSubmit").click(function (event) {
+      var username = $("#username").val()
+      var password  = $("#password").val()
+        //stop submit the form, we will post it manually.
+        event.preventDefault();
+
+        // Get form
+        var form = $('#adminForm')[0];
+
+    // Create an FormData object
+        var data = new FormData(form);
+
+    // disabled the submit button
+      $.post("/app/createuser",{"username":username,"password":password},function(data){
+        alert("Success")
+
+
+      })
+
+    });
+
+});
+
+  </script>
+  </body>
+</html>

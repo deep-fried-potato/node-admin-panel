@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    body{
+      text-align: center;
+    }
+    </style>
+  </head>
+  <body>
+    <h1>Applications Table</h1>
+    Navigate:<br>
+    <a href="/admin/newAdmin">Create admin account: </a><br>
+    <a href="/admin">Admin Login: </a><br>
+    <a href="/app/newApplication">Add new application in database </a><br>
+    <a href="/admin/applications">Admin view of applications</a><br>
+    <table id="applicationtable">
+
+    </table>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    var username = localStorage.getItem("username")
+    var password = localStorage.getItem("password")
+    var flipStatus= function(id,status){
+      $.post("/app/setstatus",{"username":username,"password":password,"id":id,status:!status},function(data){
+
+        location.reload();
+      })
+    }
+    $.post("/app/applications",{"username":username,"password":password},function(data){
+      var tbl_body = "";
+      var odd_even = false;
+      $.each(data, function() {
+          var tbl_row = "";
+          $.each(this, function(k , v) {
+              if(k != "_id" && k != "__v"){
+                if(k=="document"){
+                  tbl_row += "<td><a href='/static/"+v+"'>Download PDF</a></td>";
+                }
+                else{
+                    tbl_row += "<td>"+v+"</td>";
+                  }
+              }
+
+
+          })
+          tbl_row+="<td><button onclick=flipStatus('"+this._id+"',"+this.status+") >Change status</button></td>"
+          tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
+          odd_even = !odd_even;
+      })
+      tbl_head = "<tr><th>Name</th><th>Username</th><th>Date</th><th>Status</th><th>Document</th><th>Change Status</th></tr>"
+      tbl_head +=tbl_body
+      $("#applicationtable").html(tbl_head);
+    }).fail(function(data){
+        alert("Please login first")
+    });
+  </script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Application form</h1>
+    Navigate:<br>
+    <a href="/admin/newAdmin">Create admin account: </a><br>
+    <a href="/admin">Admin Login: </a><br>
+    <a href="/app/newApplication">Add new application in database </a><br>
+    <a href="/admin/applications">Admin view of applications</a><br>
+    <form id="fileUploadForm" action="/app/apply" enctype="multipart/form-data" method="post" >
+      Name:<input type="text" name="name" value=""><br>
+      Username:<input type="text" name="username" value=""><br>
+      Document:<input type="file" name="document" value=""><br>
+      <input id="btnSubmit" type="submit" name="" value="submit">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+
+  </script>
+  </body>
+</html>
